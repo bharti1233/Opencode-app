@@ -12,7 +12,10 @@ jobs:
         with:
           distribution: temurin
           java-version: "17"
-      - uses: android-actions/setup-android@v3
+      # No setup-android: ubuntu-latest runners ship a preinstalled SDK
+      # (ANDROID_SDK_ROOT set, licenses accepted). The setup-android@v3
+      # action force-downloads stale cmdline-tools whose sdkmanager
+      # --licenses fails on current images (run 1).
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.10.2
