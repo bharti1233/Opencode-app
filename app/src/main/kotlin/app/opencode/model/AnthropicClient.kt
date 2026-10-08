@@ -150,7 +150,10 @@ fun applyAnthropicEvent(s: AnthropicStreamState, type: String?, data: String): L
             var msg = d
             try {
                 val err = JSONObject(d).optJSONObject("error")
-                if (err != null) msg = err.optString("message").ifEmpty { d }
+                if (err != null) {
+                    val m: String = err.optString("message")
+                    if (m.isNotEmpty()) msg = m
+                }
             } catch (_: Exception) {
                 msg = d
             }

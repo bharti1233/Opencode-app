@@ -1,7 +1,7 @@
 package app.opencode
 
 import app.opencode.permissions.Action
-import app.opencode.permissions.Rule
+import app.opencode.permissions.Rule as PermRule
 import app.opencode.tools.ToolRunner
 import app.opencode.tools.Truncate
 import kotlinx.coroutines.runBlocking
@@ -54,7 +54,7 @@ class ToolsTest {
     }
 
     @Test fun denyBlocks() = runBlocking {
-        val rules = listOf(Rule("edit", "*", Action.DENY))
+        val rules = listOf(PermRule("edit", "*", Action.DENY))
         val r = ToolRunner.run("write", mapOf("filePath" to "x.txt", "content" to "y"), rules, exec())
         assertTrue((r.error ?: "").contains("denied"))
         assertEquals(false, java.io.File(tmp.root, "x.txt").exists())
