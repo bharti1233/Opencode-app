@@ -25,10 +25,3 @@ object Builtins {
     // ponytail: hidden compaction/title/summary agents use tools={} deny-all; added in Phase 10.
     val all: List<AgentDef> = listOf(build, plan, general, explore)
 }
-
-enum class LoopState { CONTINUE, STOP, COMPACT }
-
-interface AgentLoop {
-    suspend fun prompt(sessionId: String, text: String): LoopState
-    fun cancel(sessionId: String)
-}
