@@ -84,10 +84,13 @@ object ToolRunner {
         "grep" to GrepTool(root),
         "bash" to BashTool(ProcessCommandExecutor(), root),
         "task" to (task ?: StubTool("task", "no TaskTool wired")),
-        "todowrite" to StubTool("todowrite", "Phase 9 sessions"),
+        "todowrite" to TodoTool(),
         "webfetch" to WebfetchTool(),
         "websearch" to StubTool("websearch", "needs a search provider key"),
         "skill" to SkillTool(skillDirs.ifEmpty { listOf(java.io.File(root, ".opencode/skills")) }),
         "question" to StubTool("question", "Phase 8 loop"),
+        "apply_patch" to StubTool("apply_patch", "GPT-only alternate; edit/write cover all models"),
+        "lsp" to StubTool("lsp", "needs glibc language servers; Termux pkgs later"),
+        "plan_exit" to StubTool("plan_exit", "plan-mode CLI only"),
     )
 }

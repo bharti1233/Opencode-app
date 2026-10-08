@@ -93,4 +93,14 @@ class ToolsTest {
         assertEquals(2000, text.lines().size)
         assertEquals(false, Truncate.apply("short").second)
     }
+
+    @Test fun todoReplace() = runBlocking {
+        val out = runApproved(
+            "todowrite",
+            mapOf("todos" to """[{"content":"write tests","status":"in_progress"},{"content":"push","status":"pending"}]"""),
+        )
+        assertTrue(out.output.contains("[in_progress] write tests"))
+        val bad = runApproved("todowrite", mapOf("todos" to "not-json"))
+        assertTrue((bad.error ?: "").contains("JSON array"))
+    }
 }

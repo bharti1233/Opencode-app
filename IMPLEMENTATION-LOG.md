@@ -44,4 +44,10 @@
 - Phase 14: Compose UI — Projects/Chat/Term/Settings wired to loop+tools+terminal+keystore.
 - CI run 29 (eb536d9): FAILED — trailing lambda bound to `extraHeaders`, not `apiKey`. Named arg fixed.
 - CI run 30 (2beaca3): SUCCESS — Phase 14 complete (57 tests, APK builds).
+- CI run 31 (6c6bef8): SUCCESS — Phase 15 complete (63 tests, APK builds).
+- Phase 16/17: BUILD.md; CI-only release-signing plan (no fake-signed artifacts).
+- Phase 18: APK verified (valid zip, 14 dex, prompts asset, ~9.6 MB).
+- Phase 19: FINAL-OPENCODE-COMPATIBILITY-AUDIT.md (matched/partial/android-specific/unsupported/future).
+- Phase 20: review — implemented real TodoTool (was stub), advertised set == executable set, no secrets/TODOs.
+- Phase 21/22: final docs (ARCHITECTURE/TOOLS/AGENTS/MCP/SECURITY/TESTING/CI-CD/LIMITATIONS/README/CHANGELOG/FINAL-REPORT).
 - Phase 15: editor (file list, numbered view, edit+diff preview accept/reject, 4 tests).
