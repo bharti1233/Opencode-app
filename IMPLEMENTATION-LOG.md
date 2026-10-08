@@ -24,5 +24,6 @@
 - CI run 15 (157dfcf): SUCCESS — Phase 7 complete (35 tests, APK builds).
 - CI run 16 (f4f2e9b): FAILED — new `class AgentLoop` collided with skeleton `interface AgentLoop`. Removed stub.
 - CI run 17 (086d068): SUCCESS — Phase 8 complete (41 tests, APK builds).
-- Phase 9: session persistence (Room entities/DAO, RoomSessionStore, mapping tests, 2 tests).
 - Phase 8: agent loop (model-driven turn loop, doom guard, retries, deny-hides-tools, PromptBuilder, 6 tests).
+- CI run 18 (20fdba8): SUCCESS — Phase 9 complete (43 tests, APK builds).
+- Phase 10: subagents (resolveAgent, deriveChildRules, foreground/background TaskTool, depth guard, 4 tests).

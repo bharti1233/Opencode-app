@@ -70,15 +70,15 @@ object ToolRunner {
         return out.copy(output = text, truncated = truncated)
     }
 
-    /** Executors for one workspace root. bash->Phase 7, task->Phase 10, web/skill->Phase 11. */
-    fun executors(root: java.io.File): Map<String, AgentTool> = mapOf(
+    /** Executors for one workspace root. task->Phase 10 real tool when provided. */
+    fun executors(root: java.io.File, task: AgentTool? = null): Map<String, AgentTool> = mapOf(
         "read" to ReadTool(root),
         "write" to WriteTool(root),
         "edit" to EditTool(root),
         "glob" to GlobTool(root),
         "grep" to GrepTool(root),
         "bash" to BashTool(ProcessCommandExecutor(), root),
-        "task" to StubTool("task", "Phase 10 subagents"),
+        "task" to (task ?: StubTool("task", "no TaskTool wired")),
         "todowrite" to StubTool("todowrite", "Phase 9 sessions"),
         "webfetch" to StubTool("webfetch", "Phase 11 extensions"),
         "websearch" to StubTool("websearch", "Phase 11 extensions"),
