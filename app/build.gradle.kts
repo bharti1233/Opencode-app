@@ -51,4 +51,5 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     // Real org.json on the JVM: android.jar stubs throw "not mocked" in unit tests.
     testImplementation("org.json:json:20240303")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
 }

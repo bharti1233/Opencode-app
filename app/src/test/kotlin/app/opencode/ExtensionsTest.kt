@@ -14,7 +14,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import java.net.InetSocketAddress
 
 class ExtensionsTest {
     @get:Rule val tmp = TemporaryFolder()
@@ -58,21 +57,17 @@ class ExtensionsTest {
     }
 
     @Test fun webfetchLocalhost() = runBlocking {
-        val server = com.sun.net.httpserver.HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)
-        server.createContext("/") { ex ->
-            val body = "hello-fetch".toByteArray()
-            ex.sendResponseHeaders(200, body.size.toLong())
-            ex.responseBody.use { it.write(body) }
-        }
+        val server = okhttp3.mockwebserver.MockWebServer()
+        server.enqueue(okhttp3.mockwebserver.MockResponse().setBody("hello-fetch"))
         server.start()
         try {
-            val port = server.address.port
-            val ok = WebfetchTool().execute(mapOf("url" to "http://127.0.0.1:$port/"))
+            val ok = WebfetchTool().execute(mapOf("url" to server.url("/").toString()))
             assertEquals("hello-fetch", ok.output)
-            val bad = WebfetchTool().execute(mapOf("url" to "http://127.0.0.1:1/"))
+            server.shutdown()
+            val bad = WebfetchTool().execute(mapOf("url" to server.url("/").toString()))
             assertTrue((bad.error ?: "").isNotEmpty())
         } finally {
-            server.stop(0)
+            runCatching { server.shutdown() }
         }
     }
 }
