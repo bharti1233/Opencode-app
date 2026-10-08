@@ -147,10 +147,12 @@ fun applyAnthropicEvent(s: AnthropicStreamState, type: String?, data: String): L
             out += StreamEvent.Done(s.stop)
         }
         "error" -> {
-            val msg = try {
-                JSONObject(d).optJSONObject("error")?.optString("message", d) ?: d
+            var msg = d
+            try {
+                val err = JSONObject(d).optJSONObject("error")
+                if (err != null) msg = err.optString("message", d)
             } catch (_: Exception) {
-                d
+                msg = d
             }
             out += StreamEvent.Error(msg, Retry.isRetryable(null, msg))
         }
