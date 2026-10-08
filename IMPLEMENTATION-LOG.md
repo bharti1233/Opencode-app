@@ -22,4 +22,7 @@
 - CI run 13 (f4781ae): 1 failure — interactiveSession cancel race (isAlive true immediately after destroyForcibly).
 - CI run 14 (b107ec9): same test — line 68 was the cancel assert, not output buffering. Fixed cancel() to wait for death.
 - CI run 15 (157dfcf): SUCCESS — Phase 7 complete (35 tests, APK builds).
+- CI run 16 (f4f2e9b): FAILED — new `class AgentLoop` collided with skeleton `interface AgentLoop`. Removed stub.
+- CI run 17 (086d068): SUCCESS — Phase 8 complete (41 tests, APK builds).
+- Phase 9: session persistence (Room entities/DAO, RoomSessionStore, mapping tests, 2 tests).
 - Phase 8: agent loop (model-driven turn loop, doom guard, retries, deny-hides-tools, PromptBuilder, 6 tests).
