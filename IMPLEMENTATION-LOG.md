@@ -10,4 +10,8 @@
 - CI run 5 (b054905): FAILED — android.jar org.json stubs throw in unit tests. Fixed with test-only `org.json:json`.
 - CI run 6 (0445cdf): 13/14 pass; anthropicToolResultShape wrong index (test bug: empty content skips text block).
 - CI run 7 (ee2da79): SUCCESS — Phase 3 complete (14 tests, APK builds).
+- CI run 8 (0eb0083): FAILED — `permissions.Rule` vs `org.junit.Rule` import collision in ToolsTest. Fixed with alias.
+- CI run 9 (6a00731): compiled; 6 ToolsTest failures — default verdict is ASK, tests ran headless without approving. Fixed with runApproved helper.
+- CI run 10 (fa11435): SUCCESS — Phase 4 complete (23 tests, APK builds).
+- Phase 5: permission UI (PermissionSession gate, RuleStore persistence, Compose Deny/Allow/Always dialog, wired demo, 4 tests).
 - Phase 4: tool system (read/write/edit/glob/grep rooted tools, runner lifecycle w/ repair+permission+truncate, StubTool honesty, 9 tests).
