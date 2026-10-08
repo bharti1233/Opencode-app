@@ -1,13 +1,14 @@
-package app.opencode.agent
+package app.opencode.tools
 
+import app.opencode.agent.AgentDef
+import app.opencode.agent.AgentEvent
+import app.opencode.agent.AgentLoop
+import app.opencode.agent.deriveChildRules
 import app.opencode.model.ModelClient
 import app.opencode.permissions.Decision
 import app.opencode.permissions.PermissionRequest
 import app.opencode.permissions.PermissionSession
 import app.opencode.session.SessionStore
-import app.opencode.tools.AgentTool
-import app.opencode.tools.ToolResult
-import app.opencode.tools.ToolRunner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
