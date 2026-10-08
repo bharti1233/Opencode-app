@@ -17,3 +17,5 @@
 - Phase 5: permission UI (PermissionSession gate, RuleStore persistence, Compose Deny/Allow/Always dialog, wired demo, 4 tests).
 - CI run 11 (9f1611f): SUCCESS — Phase 5 complete (27 tests, APK builds).
 - Phase 6: workspace (WorkspaceManager create/list/open, external flag arms tool gate, 2 tests).
+- CI run 12 (112d8f4): SUCCESS — Phase 6 complete (29 tests, APK builds).
+- Phase 7: terminal (ProcessCommandExecutor, interactive sessions, real BashTool, 6 tests).

@@ -3,6 +3,7 @@ package app.opencode.tools
 import app.opencode.permissions.PermissionEngine
 import app.opencode.permissions.Rule
 import app.opencode.permissions.Verdict
+import app.opencode.terminal.ProcessCommandExecutor
 
 // Port of session/tools.ts wrapping + tool/tool.ts validation + llm.ts repairToolCall.
 // Lifecycle: repair name -> permission -> external-dir -> validate -> execute -> truncate.
@@ -76,7 +77,7 @@ object ToolRunner {
         "edit" to EditTool(root),
         "glob" to GlobTool(root),
         "grep" to GrepTool(root),
-        "bash" to StubTool("bash", "Phase 7 terminal"),
+        "bash" to BashTool(ProcessCommandExecutor(), root),
         "task" to StubTool("task", "Phase 10 subagents"),
         "todowrite" to StubTool("todowrite", "Phase 9 sessions"),
         "webfetch" to StubTool("webfetch", "Phase 11 extensions"),
