@@ -41,6 +41,20 @@ class GitTest {
         assertTrue(g.branch().contains("main"))
     }
 
+    @Test fun cloneLocal() = runBlocking {
+        val src = tmp.newFolder("src")
+        val setup = app.opencode.terminal.ProcessCommandExecutor()
+        setup.run("git init -b main", src.path, 10_000)
+        setup.run("git config user.email t@t", src.path, 10_000)
+        setup.run("git config user.name t", src.path, 10_000)
+        java.io.File(src, "f.txt").writeText("x")
+        setup.run("git add f.txt && git commit -m init", src.path, 10_000)
+        val dst = java.io.File(tmp.root, "dst")
+        val g = GitClient.clone(src.path, dst)
+        assertEquals(true, g.isRepo())
+        assertTrue(g.log().contains("init"))
+    }
+
     @Test fun notARepo() = runBlocking {
         val g = GitClient(tmp.newFolder("empty").path)
         assertEquals(false, g.isRepo())

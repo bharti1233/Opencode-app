@@ -36,4 +36,6 @@
 - CI run 24 (d4a0182): 1 failure — echo test asserted on `result` but echo has none. Replaced with script fake-server + FakeTransport parsing tests.
 - CI run 25 (98bd2aa): SUCCESS — Phase 11 complete (53 tests, APK builds).
 - Phase 12: git client (status/diff/log/add/commit/branch/checkout/stash/pull/push, GitError surfacing, 3 tests).
-- Phase 11: MCP/skill/webfetch (JSON-RPC stdio+HTTP, McpManager namespacing, SKILL.md discovery, localhost-tested webfetch, 5 tests).
+- CI run 26 (1898178): 1 failure — test expected `M a.txt` for a new file; porcelain shows `??`. Fixed.
+- CI run 27 (7895656): SUCCESS — Phase 12 complete (56 tests, APK builds).
+- Phase 13: GitHub (clone helper with remote redaction, auth handling documented, 1 test).

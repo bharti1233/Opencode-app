@@ -41,4 +41,21 @@ class GitClient(
     } catch (_: GitError) {
         false
     }
+
+    companion object {
+        /** Clone, then strip any token-bearing URL back to the clean remote. */
+        suspend fun clone(
+            url: String,
+            into: java.io.File,
+            cleanRemote: String? = null,
+            exec: CommandExecutor = ProcessCommandExecutor(),
+        ): GitClient {
+            val parent = into.parentFile ?: throw GitError("no parent dir")
+            val r = exec.run("git clone $url ${into.name}", parent.path, 120_000)
+            if (r.exitCode != 0) throw GitError(r.stderr.ifEmpty { r.stdout }.trim())
+            val client = GitClient(into.path, exec)
+            if (cleanRemote != null) client.git("remote", "set-url", "origin", cleanRemote)
+            return client
+        }
+    }
 }
