@@ -1,6 +1,7 @@
 package app.opencode.terminal
 
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 // Interactive shell behind the same workspace the agent uses (Phase 7 UI lands
 // in Phase 14; the session mechanics are real now).
@@ -32,7 +33,14 @@ class TerminalSessionImpl(
     }
 
     override fun cancel() {
-        proc.destroyForcibly()
+        proc.destroy()
+        try {
+            if (!proc.waitFor(2, TimeUnit.SECONDS)) {
+                proc.destroyForcibly()
+                proc.waitFor(2, TimeUnit.SECONDS)
+            }
+        } catch (_: Exception) {
+        }
         untrack()
         try {
             proc.outputStream.close()
