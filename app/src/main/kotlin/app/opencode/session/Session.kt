@@ -15,7 +15,8 @@ data class Session(
 sealed interface Part {
     data class Text(val text: String) : Part
     data class Reasoning(val text: String) : Part
-    data class ToolCall(val callId: String, val tool: String, val state: String) : Part
+    data class ToolCall(val callId: String, val tool: String, val state: String, val args: String = "") : Part
+    data class ToolResult(val callId: String, val output: String, val error: String? = null) : Part
 }
 
 data class Message(val id: String, val sessionId: String, val role: String, val parts: List<Part> = emptyList())

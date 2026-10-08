@@ -19,3 +19,7 @@
 - Phase 6: workspace (WorkspaceManager create/list/open, external flag arms tool gate, 2 tests).
 - CI run 12 (112d8f4): SUCCESS — Phase 6 complete (29 tests, APK builds).
 - Phase 7: terminal (ProcessCommandExecutor, interactive sessions, real BashTool, 6 tests).
+- CI run 13 (f4781ae): 1 failure — interactiveSession cancel race (isAlive true immediately after destroyForcibly).
+- CI run 14 (b107ec9): same test — line 68 was the cancel assert, not output buffering. Fixed cancel() to wait for death.
+- CI run 15 (157dfcf): SUCCESS — Phase 7 complete (35 tests, APK builds).
+- Phase 8: agent loop (model-driven turn loop, doom guard, retries, deny-hides-tools, PromptBuilder, 6 tests).
