@@ -137,7 +137,7 @@ fun applyAnthropicEvent(s: AnthropicStreamState, type: String?, data: String): L
             }
         }
         "message_delta" -> {
-            JSONObject(d).optJSONObject("delta")?.optString("stop_reason", null)
+            JSONObject(d).optJSONObject("delta")?.optString("stop_reason", "")
                 ?.takeIf { it.isNotEmpty() }?.let { s.stop = it }
         }
         "message_stop" -> {

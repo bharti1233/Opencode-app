@@ -57,7 +57,9 @@ class ProcTerminalManager(private val exec: ProcessCommandExecutor = ProcessComm
 
     @Synchronized
     override fun open(workdir: String): TerminalSession {
-        val proc = ProcessBuilder("sh").directory(File(workdir)).start()
+        // -i: interactive flush-before-read; without a PTY a plain sh may
+        // block-buffer stdout and the reader thread would see nothing.
+        val proc = ProcessBuilder("sh", "-i").directory(File(workdir)).start()
         val id = "term${++n}"
         exec.track(id, proc)
         val s = TerminalSessionImpl(id, workdir, proc) {
