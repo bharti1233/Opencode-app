@@ -6,4 +6,8 @@
 - CI run 1 (73cc2cf): FAILED at android-actions/setup-android@v3 (stale cmdline-tools download, `sdkmanager --licenses` exit 1) — env/config, not source. Fixed by deleting the step (runners ship a preinstalled SDK).
 - CI run 2 (302f363): SUCCESS — unit tests pass, `assembleDebug` produced 8.3 MB `app-debug` APK artifact.
 - Phase 3: model/provider system (OpenAI-compat + Anthropic streaming clients, Providers factory, Retry port, SecureKeys, 10 tests).
-- CI run 4 (7f35a90): FAILED — security-crypto:1.0.0 API mismatch in SecureKeys (MasterKey unresolved + create() overload order). Fixed by hand-rolling Keystore AES/GCM, dep removed.
+- CI run 4 (7f35a90): FAILED — security-crypto:1.0.0 API mismatch in SecureKeys. Fixed by hand-rolling Keystore AES/GCM, dep removed.
+- CI run 5 (b054905): FAILED — android.jar org.json stubs throw in unit tests. Fixed with test-only `org.json:json`.
+- CI run 6 (0445cdf): 13/14 pass; anthropicToolResultShape wrong index (test bug: empty content skips text block).
+- CI run 7 (ee2da79): SUCCESS — Phase 3 complete (14 tests, APK builds).
+- Phase 4: tool system (read/write/edit/glob/grep rooted tools, runner lifecycle w/ repair+permission+truncate, StubTool honesty, 9 tests).
