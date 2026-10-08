@@ -126,7 +126,7 @@ class ModelTest {
             ),
         )
         val msgs = j.getJSONArray("messages")
-        assertEquals("tool_use", msgs.getJSONObject(0).getJSONArray("content").getJSONObject(1).getString("type"))
+        assertEquals("tool_use", msgs.getJSONObject(0).getJSONArray("content").getJSONObject(0).getString("type"))
         assertEquals("tool_result", msgs.getJSONObject(1).getJSONArray("content").getJSONObject(0).getString("type"))
     }
 }
