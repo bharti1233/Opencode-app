@@ -16,40 +16,45 @@ class ToolsTest {
 
     private fun exec() = ToolRunner.executors(tmp.root)
 
+    // Default verdict is ASK; approve it everywhere except the deny/ask tests.
+    private suspend fun runApproved(
+        name: String,
+        args: Map<String, String>,
+        rules: List<PermRule> = emptyList(),
+    ) = ToolRunner.run(name, args, rules, exec()) { _, _ -> true }
+
     @Test fun readWriteRoundtrip() = runBlocking {
-        val r = ToolRunner.run("write", mapOf("filePath" to "a.txt", "content" to "hello"), emptyList(), exec())
+        val r = runApproved("write", mapOf("filePath" to "a.txt", "content" to "hello"))
         assertEquals(null, r.error)
-        val back = ToolRunner.run("read", mapOf("filePath" to "a.txt"), emptyList(), exec())
+        val back = runApproved("read", mapOf("filePath" to "a.txt"))
         assertEquals("hello", back.output)
     }
 
     @Test fun readDirLists() = runBlocking {
-        ToolRunner.run("write", mapOf("filePath" to "sub/b.txt", "content" to "x"), emptyList(), exec())
-        val out = ToolRunner.run("read", mapOf("filePath" to "sub"), emptyList(), exec())
+        runApproved("write", mapOf("filePath" to "sub/b.txt", "content" to "x"))
+        val out = runApproved("read", mapOf("filePath" to "sub"))
         assertEquals("b.txt", out.output)
     }
 
     @Test fun editReplace() = runBlocking {
-        ToolRunner.run("write", mapOf("filePath" to "c.txt", "content" to "foo bar"), emptyList(), exec())
-        val e = ToolRunner.run(
+        runApproved("write", mapOf("filePath" to "c.txt", "content" to "foo bar"))
+        val e = runApproved(
             "edit",
             mapOf("filePath" to "c.txt", "oldString" to "bar", "newString" to "baz"),
-            emptyList(), exec(),
         )
         assertEquals(null, e.error)
-        assertEquals("foo baz", ToolRunner.run("read", mapOf("filePath" to "c.txt"), emptyList(), exec()).output)
-        val miss = ToolRunner.run(
+        assertEquals("foo baz", runApproved("read", mapOf("filePath" to "c.txt")).output)
+        val miss = runApproved(
             "edit", mapOf("filePath" to "c.txt", "oldString" to "zzz", "newString" to "q"),
-            emptyList(), exec(),
         )
         assertTrue((miss.error ?: "").contains("not found"))
     }
 
     @Test fun globGrep() = runBlocking {
-        ToolRunner.run("write", mapOf("filePath" to "src/Main.kt", "content" to "fun main() {}"), emptyList(), exec())
-        val g = ToolRunner.run("glob", mapOf("pattern" to "*.kt"), emptyList(), exec())
+        runApproved("write", mapOf("filePath" to "src/Main.kt", "content" to "fun main() {}"))
+        val g = runApproved("glob", mapOf("pattern" to "*.kt"))
         assertTrue(g.output.contains("Main.kt"))
-        val s = ToolRunner.run("grep", mapOf("pattern" to "fun main"), emptyList(), exec())
+        val s = runApproved("grep", mapOf("pattern" to "fun main"))
         assertTrue(s.output.contains("Main.kt:1:"))
     }
 
@@ -71,15 +76,14 @@ class ToolsTest {
     }
 
     @Test fun repairAndInvalid() = runBlocking {
-        val r = ToolRunner.run("READ", mapOf("filePath" to "q.txt"), emptyList(), exec())
+        val r = runApproved("READ", mapOf("filePath" to "q.txt"))
         assertTrue((r.error ?: "").contains("no such file")) // repaired to read, then executed
-        val bad = ToolRunner.run("frobnicate", emptyMap(), emptyList(), exec())
+        val bad = runApproved("frobnicate", emptyMap())
         assertTrue((bad.error ?: "").contains("unknown tool"))
     }
 
     @Test fun externalNeedsPermission() = runBlocking {
-        val outside = "../outside-phase4.txt"
-        val denied = ToolRunner.run("write", mapOf("filePath" to outside, "content" to "x"), emptyList(), exec())
+        val denied = runApproved("write", mapOf("filePath" to "../outside-phase4.txt", "content" to "x"))
         assertTrue((denied.error ?: "").contains("external directory"))
     }
 
