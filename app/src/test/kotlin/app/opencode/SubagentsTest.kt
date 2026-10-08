@@ -77,9 +77,16 @@ class SubagentsTest {
         )
         assertTrue(started.output.startsWith("started task_"))
         val id = started.output.removePrefix("started ")
-        val resumed = tool.execute(
+        val deadline = System.currentTimeMillis() + 5000
+        var resumed = tool.execute(
             mapOf("description" to "d", "prompt" to "p", "subagent_type" to "general", "task_id" to id),
         )
+        while (resumed.output.startsWith("still running") && System.currentTimeMillis() < deadline) {
+            kotlinx.coroutines.delay(100)
+            resumed = tool.execute(
+                mapOf("description" to "d", "prompt" to "p", "subagent_type" to "general", "task_id" to id),
+            )
+        }
         assertEquals("bg-done", resumed.output)
     }
 
