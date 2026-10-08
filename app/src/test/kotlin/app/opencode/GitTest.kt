@@ -25,7 +25,7 @@ class GitTest {
 
     @Test fun statusCommitLog() = runBlocking {
         val g = initRepo()
-        assertEquals("M a.txt", g.status().lines().firstOrNull { it.contains("a.txt") })
+        assertEquals("?? a.txt", g.status().lines().firstOrNull { it.contains("a.txt") })
         g.add("a.txt")
         g.commit("first")
         assertEquals("", g.status())
