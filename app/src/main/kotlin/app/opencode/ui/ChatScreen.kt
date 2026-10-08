@@ -74,7 +74,7 @@ fun ChatScreen(project: Project) {
         scope.launch {
             try {
                 val keys = SecureKeys(ctx)
-                val client = Providers.create(cfg.provider) { keys.get(cfg.provider) }
+                val client = Providers.create(cfg.provider, apiKey = { keys.get(cfg.provider) })
                 val session = sessions.list().find { it.directory == project.dir.path }
                     ?: sessions.create(project.dir.path)
                 val task = TaskTool(
