@@ -8,6 +8,7 @@ import app.opencode.model.ProviderCatalog
 import app.opencode.model.Providers
 import app.opencode.model.RequestedToolCall
 import app.opencode.model.Retry
+import app.opencode.model.SecureKeys
 import app.opencode.model.StreamEvent
 import app.opencode.model.ToolSpec
 import app.opencode.model.applyAnthropicEvent
@@ -97,6 +98,21 @@ class ModelTest {
         val tc = done[0] as StreamEvent.ToolCall
         assertEquals("t1", tc.call.id)
         assertEquals("{\"a\":1}", tc.call.argumentsJson)
+    }
+
+    @Test fun secureKeysRoundtrip() {
+        val keyGen = javax.crypto.KeyGenerator.getInstance("AES")
+        keyGen.init(256)
+        val key = keyGen.generateKey()
+        val blob = SecureKeys.encrypt(key, "sk-secret".toByteArray())
+        assertEquals("sk-secret", SecureKeys.decrypt(key, blob).decodeToString())
+        // wrong key must fail, not return garbage
+        val other = keyGen.generateKey()
+        try {
+            SecureKeys.decrypt(other, blob)
+            fail("expected auth failure")
+        } catch (_: Exception) {
+        }
     }
 
     @Test fun anthropicToolResultShape() {
