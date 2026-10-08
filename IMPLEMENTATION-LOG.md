@@ -25,5 +25,10 @@
 - CI run 16 (f4f2e9b): FAILED — new `class AgentLoop` collided with skeleton `interface AgentLoop`. Removed stub.
 - CI run 17 (086d068): SUCCESS — Phase 8 complete (41 tests, APK builds).
 - Phase 8: agent loop (model-driven turn loop, doom guard, retries, deny-hides-tools, PromptBuilder, 6 tests).
+- Phase 9: session persistence (Room entities/DAO, RoomSessionStore, mapping tests, 2 tests).
 - CI run 18 (20fdba8): SUCCESS — Phase 9 complete (43 tests, APK builds).
-- Phase 10: subagents (resolveAgent, deriveChildRules, foreground/background TaskTool, depth guard, 4 tests).
+- Phase 10: subagents (resolveAgent, deriveChildRules, foreground/background TaskTool, depth guard, 5 tests).
+- CI run 19 (e438898): FAILED — Kotlin daemon hiccup + test couldn't see TaskTool: wrong `package app.opencode.agent` header in tools/ file. Fixed.
+- CI run 20 (2c27355): 1 failure — backgroundThenResume assumed synchronous completion; production semantics is poll-by-task_id. Test polls now.
+- CI run 21 (df1597f): SUCCESS — Phase 10 complete (48 tests, APK builds).
+- Phase 11: MCP/skill/webfetch (JSON-RPC stdio+HTTP, McpManager namespacing, SKILL.md discovery, localhost-tested webfetch, 5 tests).

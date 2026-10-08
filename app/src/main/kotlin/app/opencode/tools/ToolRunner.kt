@@ -3,6 +3,7 @@ package app.opencode.tools
 import app.opencode.permissions.PermissionEngine
 import app.opencode.permissions.Rule
 import app.opencode.permissions.Verdict
+import app.opencode.skill.SkillTool
 import app.opencode.terminal.ProcessCommandExecutor
 
 // Port of session/tools.ts wrapping + tool/tool.ts validation + llm.ts repairToolCall.
@@ -70,8 +71,12 @@ object ToolRunner {
         return out.copy(output = text, truncated = truncated)
     }
 
-    /** Executors for one workspace root. task->Phase 10 real tool when provided. */
-    fun executors(root: java.io.File, task: AgentTool? = null): Map<String, AgentTool> = mapOf(
+    /** Executors for one workspace root. task->real tool when provided. */
+    fun executors(
+        root: java.io.File,
+        task: AgentTool? = null,
+        skillDirs: List<java.io.File> = emptyList(),
+    ): Map<String, AgentTool> = mapOf(
         "read" to ReadTool(root),
         "write" to WriteTool(root),
         "edit" to EditTool(root),
@@ -80,9 +85,9 @@ object ToolRunner {
         "bash" to BashTool(ProcessCommandExecutor(), root),
         "task" to (task ?: StubTool("task", "no TaskTool wired")),
         "todowrite" to StubTool("todowrite", "Phase 9 sessions"),
-        "webfetch" to StubTool("webfetch", "Phase 11 extensions"),
-        "websearch" to StubTool("websearch", "Phase 11 extensions"),
-        "skill" to StubTool("skill", "Phase 11 extensions"),
+        "webfetch" to WebfetchTool(),
+        "websearch" to StubTool("websearch", "needs a search provider key"),
+        "skill" to SkillTool(skillDirs.ifEmpty { listOf(java.io.File(root, ".opencode/skills")) }),
         "question" to StubTool("question", "Phase 8 loop"),
     )
 }
