@@ -31,4 +31,9 @@
 - CI run 19 (e438898): FAILED — Kotlin daemon hiccup + test couldn't see TaskTool: wrong `package app.opencode.agent` header in tools/ file. Fixed.
 - CI run 20 (2c27355): 1 failure — backgroundThenResume assumed synchronous completion; production semantics is poll-by-task_id. Test polls now.
 - CI run 21 (df1597f): SUCCESS — Phase 10 complete (48 tests, APK builds).
+- CI run 22 (53badc9): FAILED — OkHttp 4.12 `response.body` nullable. Fixed both call sites.
+- CI run 23 (dab59a5): FAILED — `com.sun.net.httpserver` invisible to unit-test compile. Switched to MockWebServer.
+- CI run 24 (d4a0182): 1 failure — echo test asserted on `result` but echo has none. Replaced with script fake-server + FakeTransport parsing tests.
+- CI run 25 (98bd2aa): SUCCESS — Phase 11 complete (53 tests, APK builds).
+- Phase 12: git client (status/diff/log/add/commit/branch/checkout/stash/pull/push, GitError surfacing, 3 tests).
 - Phase 11: MCP/skill/webfetch (JSON-RPC stdio+HTTP, McpManager namespacing, SKILL.md discovery, localhost-tested webfetch, 5 tests).
