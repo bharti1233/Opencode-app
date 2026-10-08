@@ -25,7 +25,7 @@ class WebfetchTool(
             val req = Request.Builder().url(url).header("User-Agent", "opencode-android/0.1").get().build()
             http.newCall(req).execute().use { res ->
                 if (!res.isSuccessful) return ToolResult("", error = "HTTP ${res.code}")
-                val body = res.body.string()
+                val body = (res.body ?: return ToolResult("", error = "empty body")).string()
                 if (body.length > 200_000) ToolResult(body.take(200_000), truncated = true)
                 else ToolResult(body)
             }

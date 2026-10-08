@@ -95,7 +95,7 @@ class HttpTransport(
             .post(buildRequest(id, method, params).toRequestBody("application/json".toMediaType()))
             .build()
         http.newCall(req).execute().use { res ->
-            val body = res.body.string()
+            val body = (res.body ?: throw IllegalStateException("empty body")).string()
             val data = if (body.contains("text/event-stream") || body.startsWith("event:")) {
                 body.lines().filter { it.startsWith("data:") }.joinToString("") { it.removePrefix("data:").trim() }
             } else body
