@@ -39,5 +39,9 @@
 - CI run 26 (1898178): 1 failure — test expected `M a.txt` for a new file; porcelain shows `??`. Fixed.
 - CI run 27 (7895656): SUCCESS — Phase 12 complete (56 tests, APK builds).
 - CI run 28 (74c9c0d): SUCCESS — Phase 13 complete (57 tests, APK builds).
-- Phase 14: native UI (Projects/Chat/Term/Settings wired to loop+tools+terminal+keystore).
 - Phase 13: GitHub (clone helper with remote redaction, auth handling documented, 1 test).
+- CI run 28 (74c9c0d): SUCCESS — Phase 13 complete (57 tests, APK builds).
+- Phase 14: Compose UI — Projects/Chat/Term/Settings wired to loop+tools+terminal+keystore.
+- CI run 29 (eb536d9): FAILED — trailing lambda bound to `extraHeaders`, not `apiKey`. Named arg fixed.
+- CI run 30 (2beaca3): SUCCESS — Phase 14 complete (57 tests, APK builds).
+- Phase 15: editor (file list, numbered view, edit+diff preview accept/reject, 4 tests).

@@ -21,6 +21,7 @@ sealed interface Screen {
     data object Projects : Screen
     data class Chat(val project: Project) : Screen
     data class Term(val project: Project) : Screen
+    data class Edit(val project: Project) : Screen
     data object Settings : Screen
 }
 
@@ -34,10 +35,12 @@ fun App() {
                     Button(onClick = { screen = Screen.Projects }) { Text("Projects") }
                     val chat = screen as? Screen.Chat
                     val term = screen as? Screen.Term
-                    val proj = chat?.project ?: term?.project
+                    val edit = screen as? Screen.Edit
+                    val proj = chat?.project ?: term?.project ?: edit?.project
                     if (proj != null) {
                         Button(onClick = { screen = Screen.Chat(proj) }) { Text("Chat") }
                         Button(onClick = { screen = Screen.Term(proj) }) { Text("Term") }
+                        Button(onClick = { screen = Screen.Edit(proj) }) { Text("Edit") }
                     }
                     Button(onClick = { screen = Screen.Settings }) { Text("Settings") }
                 }
@@ -45,6 +48,7 @@ fun App() {
                     is Screen.Projects -> ProjectsScreen { screen = Screen.Chat(it) }
                     is Screen.Chat -> ChatScreen(s.project)
                     is Screen.Term -> TerminalScreen(s.project)
+                    is Screen.Edit -> EditorScreen(s.project)
                     is Screen.Settings -> SettingsScreen()
                 }
             }
